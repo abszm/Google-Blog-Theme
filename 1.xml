@@ -7,140 +7,392 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css' rel='stylesheet'/>
     
     <b:skin><![CDATA[
-    /*
-     * Stack Theme for Blogger
-     * 自动适配头像与文章详情版
-     */
-    :root {
-        --main-bg: #f5f5f5;
-        --sidebar-bg: #ffffff;
-        --card-bg: #ffffff;
-        --primary-text: #2c3e50;
-        --secondary-text: #718096;
-        --accent-color: #2980b9;
-        --border-radius: 16px;
-        --shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
-    }
+/* ================================================================
+   Google Blog Theme - 原始版本
+   三栏Grid布局 + 现代卡片风格 + 蓝色强调色
+   按区域分块管理，方便修改
+   ================================================================ */
 
-    body {
-        background-color: var(--main-bg);
-        color: var(--primary-text);
-        font-family: 'Inter', -apple-system, 'PingFang SC', sans-serif;
-        margin: 0; padding: 0;
-        line-height: 1.6;
-    }
+/* ================================================================
+   区域 1: 变量定义
+   ---------------------------------------------------------------
+   修改主题色、圆角、阴影等直接改这里
+   ================================================================ */
+:root {
+    /* 颜色系统 */
+    --main-bg: #f5f5f5;
+    --sidebar-bg: #ffffff;
+    --card-bg: #ffffff;
+    --primary-text: #2c3e50;
+    --secondary-text: #718096;
+    --accent-color: #2980b9;
+    --border-color: #e2e8f0;
 
+    /* 圆角系统 */
+    --border-radius: 16px;
+
+    /* 阴影系统 */
+    --shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+
+    /* 过渡动画 */
+    --transition: 0.2s;
+}
+
+/* ================================================================
+   区域 2: 基础重置
+   ================================================================ */
+body {
+    background-color: var(--main-bg);
+    color: var(--primary-text);
+    font-family: 'Inter', -apple-system, 'PingFang SC', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* ================================================================
+   区域 3: 主容器布局
+   ---------------------------------------------------------------
+   三栏Grid: 左侧280px | 中间自适应 | 右侧320px
+   最大宽度: 1300px
+   ================================================================ */
+.stack-container {
+    display: grid;
+    grid-template-columns: 280px 1fr 320px;
+    max-width: 1300px;
+    margin: 0 auto;
+    gap: 25px;
+    padding: 25px;
+}
+
+/* ================================================================
+   区域 4: 左侧边栏
+   ---------------------------------------------------------------
+   - 白色背景 + 圆角卡片
+   - 头像居中 + 导航列表
+   - 社交图标
+   ================================================================ */
+.stack-left {
+    background: var(--sidebar-bg);
+    border-radius: var(--border-radius);
+    padding: 40px 20px;
+    height: calc(100vh - 100px);
+    position: sticky;
+    top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: var(--shadow);
+}
+
+/* 头像 */
+.stack-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 20px;
+    border: 4px solid #f0f4f8;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* 标题 */
+.stack-title {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: var(--primary-text);
+    text-decoration: none;
+}
+
+/* 副标题 */
+.stack-subtitle {
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 0 10px;
+}
+
+/* 导航菜单 */
+.stack-nav {
+    width: 100%;
+    flex-grow: 1;
+}
+
+.stack-nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    color: var(--primary-text);
+    text-decoration: none;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.stack-nav a:hover {
+    background: #f0f4f8;
+    color: var(--accent-color);
+}
+
+.stack-nav a i {
+    width: 25px;
+    margin-right: 15px;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+/* 社交图标 */
+.stack-social {
+    display: flex;
+    gap: 15px;
+    margin-top: auto;
+}
+
+.stack-social a {
+    color: var(--secondary-text);
+    font-size: 1.3rem;
+    transition: var(--transition);
+}
+
+.stack-social a:hover {
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+/* ================================================================
+   区域 5: 文章卡片 (首页列表)
+   ---------------------------------------------------------------
+   - 白色卡片 + 阴影 + 圆角
+   - 左侧文字信息 + 右侧图片
+   - 悬停上浮效果
+   ================================================================ */
+.stack-post-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    margin-bottom: 25px;
+    overflow: hidden;
+    display: flex;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.stack-post-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+/* 文章信息区域 */
+.post-info {
+    padding: 30px;
+    flex: 1;
+}
+
+.post-info h2 {
+    font-size: 1.6rem;
+    margin: 0 0 15px 0;
+    line-height: 1.3;
+    color: var(--primary-text);
+}
+
+.post-info p {
+    color: var(--secondary-text);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* 文章元信息 */
+.post-meta {
+    margin-top: 20px;
+    font-size: 0.85rem;
+    color: var(--secondary-text);
+}
+
+.post-meta i {
+    margin-right: 5px;
+}
+
+/* 文章图片 */
+.post-image-box {
+    width: 260px;
+    background-size: cover;
+    background-position: center;
+    flex-shrink: 0;
+}
+
+/* ================================================================
+   区域 6: 文章内容页 (详情页)
+   ---------------------------------------------------------------
+   - 白色卡片 + 阴影 + 圆角
+   - 大标题 + 元信息 + 正文
+   ================================================================ */
+.stack-article {
+    background: var(--card-bg);
+    padding: 50px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.entry-header {
+    margin-bottom: 40px;
+}
+
+.entry-title {
+    font-size: 2.6rem;
+    margin: 0 0 20px 0;
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.entry-meta {
+    color: var(--secondary-text);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 20px;
+}
+
+/* 文章正文 */
+.entry-content {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #334;
+}
+
+.entry-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.entry-content h2,
+.entry-content h3 {
+    margin-top: 1.8em;
+    color: var(--primary-text);
+}
+
+/* ================================================================
+   区域 7: 分页器
+   ================================================================ */
+.blog-pager {
+    display: flex;
+    gap: 15px;
+    padding: 20px 0;
+}
+
+.blog-pager a {
+    background: var(--card-bg);
+    padding: 12px 25px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--primary-text);
+    font-weight: bold;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.blog-pager a:hover {
+    background: var(--accent-color);
+    color: #fff;
+}
+
+/* ================================================================
+   区域 8: 右侧边栏
+   ---------------------------------------------------------------
+   - 搜索框
+   - 小部件容器
+   ================================================================ */
+.widget-container {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+}
+
+.widget-title {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+/* 搜索框 */
+.search-box {
+    background: #f1f5f9;
+    border-radius: 10px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.search-box input {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.95rem;
+}
+
+/* ================================================================
+   区域 9: 响应式设计
+   ---------------------------------------------------------------
+   - 1100px: 隐藏右侧栏，两栏布局
+   - 768px: 手机单栏布局
+   ================================================================ */
+
+/* 平板 (小于 1100px) */
+@media (max-width: 1100px) {
     .stack-container {
-        display: grid;
-        grid-template-columns: 280px 1fr 320px;
-        max-width: 1300px;
-        margin: 0 auto;
-        gap: 25px;
-        padding: 25px;
+        grid-template-columns: 250px 1fr;
+    }
+    .stack-right {
+        display: none;
+    }
+}
+
+/* 手机 (小于 768px) */
+@media (max-width: 768px) {
+    .stack-container {
+        grid-template-columns: 1fr;
+        padding: 15px;
     }
 
-    /* --- 左侧边栏 --- */
     .stack-left {
-        background: var(--sidebar-bg);
-        border-radius: var(--border-radius);
-        padding: 40px 20px;
-        height: calc(100vh - 100px);
-        position: sticky;
-        top: 25px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: var(--shadow);
-    }
-
-    .stack-avatar {
-        width: 120px; height: 120px;
-        border-radius: 50%;
-        object-fit: cover;
+        position: relative;
+        height: auto;
+        top: 0;
         margin-bottom: 20px;
-        border: 4px solid #f0f4f8;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        padding: 30px 20px;
     }
 
-    .stack-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 5px; color: var(--primary-text); text-decoration: none;}
-    .stack-subtitle { font-size: 0.85rem; color: var(--secondary-text); margin-bottom: 30px; text-align:center; padding: 0 10px; }
-
-    .stack-nav { width: 100%; flex-grow: 1; }
-    .stack-nav a {
-        display: flex; align-items: center;
-        padding: 12px 15px;
-        color: var(--primary-text);
-        text-decoration: none;
-        border-radius: 10px;
-        margin-bottom: 8px;
-        font-weight: 500;
-        transition: 0.2s;
-    }
-    .stack-nav a:hover { background: #f0f4f8; color: var(--accent-color); }
-    .stack-nav a i { width: 25px; margin-right: 15px; font-size: 1.1rem; opacity: 0.8; }
-
-    .stack-social { display: flex; gap: 15px; margin-top: auto; }
-    .stack-social a { color: var(--secondary-text); font-size: 1.3rem; transition: 0.2s; }
-    .stack-social a:hover { color: var(--accent-color); transform: scale(1.1); }
-
-    /* --- 文章卡片 (首页) --- */
     .stack-post-card {
-        background: var(--card-bg);
-        border-radius: var(--border-radius);
-        margin-bottom: 25px;
-        overflow: hidden;
-        display: flex;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: inherit;
+        flex-direction: column-reverse;
     }
-    .stack-post-card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
 
-    .post-info { padding: 30px; flex: 1; }
-    .post-info h2 { font-size: 1.6rem; margin: 0 0 15px 0; line-height: 1.3; color: var(--primary-text); }
-    .post-info p { color: var(--secondary-text); font-size: 0.95rem; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .post-image-box {
+        width: 100%;
+        height: 220px;
+    }
 
-    .post-image-box { width: 260px; background-size: cover; background-position: center; flex-shrink: 0; }
-
-    /* --- 文章内容页 (详情) --- */
     .stack-article {
-        background: var(--card-bg);
-        padding: 50px;
-        border-radius: var(--border-radius);
-        box-shadow: var(--shadow);
+        padding: 30px 20px;
     }
-    .entry-header { margin-bottom: 40px; }
-    .entry-title { font-size: 2.6rem; margin: 0 0 20px 0; line-height: 1.2; font-weight: 800; }
-    .entry-meta { color: var(--secondary-text); font-size: 0.9rem; display: flex; gap: 20px; }
-    .entry-content { font-size: 1.15rem; line-height: 1.9; color: #334; }
-    .entry-content img { max-width: 100%; height: auto; border-radius: 12px; margin: 20px 0; }
-    .entry-content h2, .entry-content h3 { margin-top: 1.8em; color: var(--primary-text); }
 
-    /* --- 分页 --- */
-    .blog-pager { display: flex; gap: 15px; padding: 20px 0; }
-    .blog-pager a { background: var(--card-bg); padding: 12px 25px; border-radius: 12px; text-decoration: none; color: var(--primary-text); font-weight: bold; box-shadow: var(--shadow); transition: 0.2s; }
-    .blog-pager a:hover { background: var(--accent-color); color: #fff; }
-
-    /* --- 右侧 --- */
-    .widget-container { background: var(--card-bg); border-radius: var(--border-radius); padding: 25px; margin-bottom: 25px; box-shadow: var(--shadow); }
-    .widget-title { font-size: 0.85rem; font-weight: bold; color: var(--secondary-text); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
-    .search-box { background: #f1f5f9; border-radius: 10px; padding: 12px 15px; display: flex; align-items: center; }
-    .search-box input { background: transparent; border: none; outline: none; width: 100%; font-size: 0.95rem; }
-
-    /* --- 响应式调整 --- */
-    @media (max-width: 1100px) {
-        .stack-container { grid-template-columns: 250px 1fr; }
-        .stack-right { display: none; }
+    .entry-title {
+        font-size: 1.8rem;
     }
-    @media (max-width: 768px) {
-        .stack-container { grid-template-columns: 1fr; padding: 15px; }
-        .stack-left { position: relative; height: auto; top: 0; margin-bottom: 20px; padding: 30px 20px; }
-        .stack-post-card { flex-direction: column-reverse; }
-        .post-image-box { width: 100%; height: 220px; }
-        .stack-article { padding: 30px 20px; }
-        .entry-title { font-size: 1.8rem; }
-    }
+}
     ]]></b:skin>
 </head>
 
@@ -202,8 +454,8 @@
                                 <div class='post-info'>
                                     <h2><a expr:href='data:post.url'><data:post.title/></a></h2>
                                     <p><data:post.snippet/></p>
-                                    <div style='margin-top:20px; font-size:0.85rem; color:var(--secondary-text);'>
-                                        <i class='far fa-calendar-alt' style='margin-right:5px;'/> <data:post.dateHeader/>
+                                    <div class='post-meta'>
+                                        <span><i class='far fa-calendar-alt'/> <data:post.dateHeader/></span>
                                     </div>
                                 </div>
                                 <b:if cond='data:post.firstImageUrl'>
@@ -223,9 +475,9 @@
                                 <header class='entry-header'>
                                     <h1 class='entry-title'><data:post.title/></h1>
                                     <div class='entry-meta'>
-                                        <span><i class='far fa-calendar-alt' style='margin-right:5px;'/> <data:post.dateHeader/></span>
+                                        <span class='entry-meta-item'><i class='far fa-calendar-alt'/> <data:post.dateHeader/></span>
                                         <b:if cond='data:post.labels'>
-                                            <span><i class='fas fa-tag' style='margin-right:5px;'/> 
+                                            <span class='entry-meta-item'><i class='fas fa-tag'/> 
                                                 <b:loop index='i' values='data:post.labels' var='label'>
                                                     <data:label.name/><b:if cond='data:i &lt; data:post.labels.size - 1'>, </b:if>
                                                 </b:loop>
