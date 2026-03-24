@@ -424,8 +424,7 @@ body {
 
             <div class='stack-social'>
                 <a href='#' title='GitHub'><i class='fab fa-github'/></a>
-                <a href='#' title='Email'><i class='fas fa-envelope'/></a>
-                <a href='#' title='RSS'><i class='fas fa-rss'/></a>
+                <a href='#' title='网盘'><i class='fas fa-cloud'/></a>
             </div>
         </aside>
 
